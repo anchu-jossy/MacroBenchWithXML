@@ -14,11 +14,15 @@
             android:queryHint="Search for shops"
             android:iconifiedByDefault="false"
             android:focusable="true"
+            android:layout_margin="10dp"
+            android:background="@drawable/search_border"
+
             android:focusableInTouchMode="true" />
 
         <!-- RecyclerView -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
+            android:layout_margin="10dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 

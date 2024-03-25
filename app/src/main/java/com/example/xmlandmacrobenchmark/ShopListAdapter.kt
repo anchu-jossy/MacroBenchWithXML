@@ -1,10 +1,12 @@
 package com.example.xmlandmacrobenchmark
 
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.xmlandmacrobenchmark.databinding.LayoutShoplistBinding
@@ -43,6 +45,10 @@ class ShopListAdapter(private val context: Context, private var shopList: List<S
             notifyDataSetChanged()
         }
     }
+    fun filterShopList(filteredList: List<Shop>) {
+        filteredShopList = filteredList
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ShopViewHolder {
         val inflater = LayoutInflater.from(context)
@@ -58,7 +64,10 @@ class ShopListAdapter(private val context: Context, private var shopList: List<S
     override fun getItemCount(): Int = filteredShopList.size
 
     override fun getFilter(): Filter = filter
-
+     fun restoreOriginalDataSet() {
+        filteredShopList = shopList
+        notifyDataSetChanged()
+    }
     inner class ShopViewHolder(private val binding: LayoutShoplistBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
@@ -69,13 +78,31 @@ class ShopListAdapter(private val context: Context, private var shopList: List<S
                 shopName.text = shop.name
                 shopAddress.text = shop.address
                 shopRating.text = "Rating: ${shop.rating}"
-
+                addStarRatings(shop.rating.toInt(), shopRating)
                 // Load image using Glide
                 Glide.with(itemView)
                     .load(shop.image)
                     .placeholder(R.drawable.ic_launcher_background)
                     .into(imageView)
+
             }
         }
+        // Function to add star ratings to TextView
+        private fun addStarRatings(rating: Int, textView: TextView) {
+            val filledStar = "\u2605" // Filled star Unicode character
+            val unfilledStar = "\u2606" // Unfilled star Unicode character
+            val ratingText = StringBuilder()
+            val brighterGrey = "#BEBEBE" // Example hexadecimal value for a lighter grey color
+
+            for (i in 1..5) {
+                ratingText.append(if (i <= rating) filledStar else unfilledStar)
+            }
+
+            textView.text = "Rating: $rating$ratingText"
+            textView.setTextColor(Color.parseColor(brighterGrey))
+
+
+        }
+
     }
 }

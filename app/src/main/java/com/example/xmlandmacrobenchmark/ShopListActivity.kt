@@ -15,7 +15,45 @@ class ShopListActivity : AppCompatActivity() {
         val adapter = ShopListAdapter(this, getDummyShops())
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
+       binding.searchView.setOnQueryTextListener(
+        object : androidx.appcompat.widget.SearchView.OnQueryTextListener {
+        override fun onQueryTextSubmit(query: String?): Boolean {
+            // Perform search operation here
+            performSearch(query)
+            return true
+        }
+
+        override fun onQueryTextChange(newText: String?): Boolean {
+            // Handle text changes in search bar
+            // You can perform incremental search here
+            return true
+        }
+    })
+        binding.searchView.setOnCloseListener {
+            // Restore the original data set when the search view is closed
+            adapter.restoreOriginalDataSet()
+            true // Return true to indicate that the listener has consumed the event
+        }
+
+}
+
+
+    private fun performSearch(query: String?) {
+        val filteredList = mutableListOf<Shop>()
+
+        query?.let { searchTerm ->
+            for (shop in getDummyShops()) {
+                if (shop.name.contains(searchTerm, true) || shop.address.contains(searchTerm, true)) {
+                    filteredList.add(shop)
+                }
+            }
+        }
+
+        // Update the adapter with the filtered list
+        val adapter = binding.recyclerView.adapter as ShopListAdapter
+        adapter.filterShopList(filteredList)
     }
+
     private fun getDummyShops(): List<Shop> {
         return listOf(
             Shop(1, "Fashion Emporium", "123 Main St", 4.5f, "https://img.freepik.com/free-photo/cheerful-happy-woman-enjoying-shopping-summer-sale-she-is-carrying-shopping-bags-walking_74952-3018.jpg?t=st=1710765372~exp=1710768972~hmac=8406fa5df800660d681b2359c4b038b3918957d7aef802a0cb83d8229347c5d5&w=900",),
