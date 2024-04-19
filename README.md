@@ -13,3 +13,6 @@ CPU Usage of XML app in Navigation Functionality
 Memory Usage of XML app in Navigation Functionality
 
 <img width="200" alt="image" src="https://github.com/anchu-jossy/MacroBenchWithXML/assets/16795735/c90e31ce-bcf8-4213-9379-418f1c1a725b">
+Memory Usage of XML app in Navigation Functionality
+
+<img width="200" alt="image" src="https://github.com/anchu-jossy/MacroBenchWithXML/assets/16795735/c90e31ce-bcf8-4213-9379-418f1c1a725b">
