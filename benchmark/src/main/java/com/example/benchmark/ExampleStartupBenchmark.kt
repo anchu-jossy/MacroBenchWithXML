@@ -29,93 +29,7 @@ import org.junit.runner.RunWith
  * Run this benchmark from Studio to see startup measurements, and captured system traces
  * for investigating your app's performance.
  */
-//@RunWith(AndroidJUnit4::class)
-//class ExampleStartupBenchmark {
-//    @get:Rule
-//    val benchmarkRule = MacrobenchmarkRule()
 
-//    @Test
-//    fun startup() = benchmarkRule.measureRepeated(
-//        packageName = "com.example.xmlandmacrobenchmark",
-//        metrics = listOf(StartupTimingMetric()),
-//        iterations = 5,
-//        startupMode = StartupMode.COLD
-//    ) {
-//        pressHome()
-//        startActivityAndWait()
-//    }
-//    @Test
-//
-//    fun scrollAndNavigate() = benchmarkRule.measureRepeated(
-//        packageName = "com.example.xmlandmacrobenchmark",
-//
-//        //  packageName = "com.plcoding.baselineprofilemacrobenchmark",
-//
-//        metrics = listOf(FrameTimingMetric()),
-//
-//        iterations = 1,
-//
-//        startupMode = StartupMode.COLD
-//
-//    ) {
-//
-//        pressHome()
-//
-//        startActivityAndWait()
-//        addElementsAndScrollDown()
-//
-//    }
-//    private fun MacrobenchmarkScope.addElementsAndScrollDown() {
-//        //find button by text
-//        val button = device.findObject(By.text("Click-Me"))
-//
-//        //find list by tag
-//
-//        val list = device.findObject(By.res("itemArray"))
-//        repeat(30){
-//
-//            button.click()
-//
-//        }
-//
-//        device.waitForIdle()
-//        list.setGestureMargin(device.displayWidth / 5)// for sling down gesture margin
-//        list.fling(Direction.DOWN)
-//        device.findObject(By.text("5")).click()
-//
-//
-//        device.wait(Until.hasObject(By.text("Detail: Element-29")),5000)
-//
-//    }
-//.........
-//
-//
-//
-//    package com.example.benchmark
-//
-//    import androidx.benchmark.macro.*
-//    import androidx.benchmark.macro.junit4.MacrobenchmarkRule
-//    import androidx.test.ext.junit.runners.AndroidJUnit4
-//    import androidx.test.uiautomator.By
-//    import androidx.test.uiautomator.Direction
-//    import androidx.test.uiautomator.UiObject2
-//    import androidx.test.uiautomator.Until
-//    import org.junit.Rule
-//    import org.junit.Test
-//    import org.junit.runner.RunWith
-
-    /**
-     * This is an example startup benchmark.
-     *
-     * It navigates to the device's home screen, and launches the default activity.
-     *
-     * Before running this benchmark:
-     * 1) switch your app's active build variant in the Studio (affects Studio runs only)
-     * 2) add `<profileable android:shell="true" />` to your app's manifest, within the `<application>` tag
-     *
-     * Run this benchmark from Studio to see startup measurements, and captured system traces
-     * for investigating your app's performance.
-     */
     @RunWith(AndroidJUnit4::class)
     class ExampleStartupBenchmark {
         @get:Rule
@@ -125,7 +39,7 @@ import org.junit.runner.RunWith
         fun startupCold() = benchmarkRule.measureRepeated(
             packageName = "com.example.xmlandmacrobenchmark",
             metrics = listOf(StartupTimingMetric()),
-            iterations = 2,
+            iterations = 5,
             startupMode = StartupMode.COLD
         ) {
             pressHome()
@@ -136,7 +50,7 @@ import org.junit.runner.RunWith
         fun startupWarm() = benchmarkRule.measureRepeated(
             packageName = "com.example.xmlandmacrobenchmark",
             metrics = listOf(StartupTimingMetric()),
-            iterations = 2,
+            iterations = 5,
             startupMode = StartupMode.WARM
         ) {
             pressHome()
@@ -147,7 +61,7 @@ import org.junit.runner.RunWith
         fun startupHot() = benchmarkRule.measureRepeated(
             packageName = "com.example.xmlandmacrobenchmark",
             metrics = listOf(StartupTimingMetric()),
-            iterations = 2,
+            iterations = 5,
             startupMode = StartupMode.HOT
         ) {
             pressHome()
@@ -156,7 +70,7 @@ import org.junit.runner.RunWith
 
 
         @Test
-        fun scrollAndNavigate() = benchmarkRule.measureRepeated(
+        fun LoadAndScroll() = benchmarkRule.measureRepeated(
             packageName = "com.example.xmlandmacrobenchmark",
             metrics = listOf(FrameTimingMetric()),
             iterations = 5,
@@ -166,20 +80,34 @@ import org.junit.runner.RunWith
             startActivityAndWait()
 
             addElementsAndScrollDown()
-            device.findObject(By.text("Floor 3")).click()
-            device.wait(Until.hasObject(By.text("Floor 3")), 8000)
+          //  device.findObject(By.text("Floor3")).click()
+          //  device.wait(Until.hasObject(By.text("Floor3")), 8000)
 
 // Scroll the RecyclerView until finding the "Dominos" shop
-            var recyclerView = device.findObject(By.text("getDummyShops"))
-            while (true) {
-                //   recyclerView.fling(Direction.DOWN)
-                if (device.hasObject(By.text("Dominos"))) {
-                    break
-                }
-            }
+          //  var recyclerView = device.findObject(By.text("getDummyShops"))
+
 
         }
 
+    @Test
+    fun navigate() = benchmarkRule.measureRepeated(
+        packageName = "com.example.xmlandmacrobenchmark",
+        metrics = listOf(FrameTimingMetric()),
+        iterations = 5,
+        startupMode = StartupMode.COLD
+    ) {
+        pressHome()
+        startActivityAndWait()
+
+        addElementsAndScrollDown()
+         device.findObject(By.text("Floor14")).click()
+        device.wait(Until.hasObject(By.text("Floor14")), 8000)
+
+// Scroll the RecyclerView until finding the "Dominos" shop
+        //  var recyclerView = device.findObject(By.text("getDummyShops"))
+
+
+    }
 
         private fun MacrobenchmarkScope.addElementsAndScrollDown() {
             val maxAttempts = 5
@@ -196,7 +124,7 @@ import org.junit.runner.RunWith
 
             if (button != null) {
                 // Button found, proceed with the click operation
-                repeat(5) {
+                repeat(15) {
                     button.click()
                 }
             } else {

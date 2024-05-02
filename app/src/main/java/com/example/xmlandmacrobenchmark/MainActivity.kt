@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         // Set click listener for the button
         binding.exploreButton.setOnClickListener {
 
-            item_list.add("Floor $counter")
+            item_list.add("Floor$counter")
             counter += 1
             // Update the RecyclerView
             adapter.notifyDataSetChanged()
